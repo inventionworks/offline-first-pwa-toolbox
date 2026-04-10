@@ -1,1 +1,297 @@
+/* ====================== Offline First PWA Toolbox ====================== */
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --bg: #0f172a;
+  --surface: #1e2937;
+  --surface2: #334155;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #22d3ee;
+  --success: #4ade80;
+  --border: #475569;
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem 0;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background: var(--surface);
+  padding: 0.75rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+}
+
+.tab-button {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 20px;
+  background: var(--surface2);
+  color: var(--text);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-button:hover {
+  background: var(--surface);
+  transform: translateY(-2px);
+}
+
+.tab-button.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+}
+
+/* Tool Containers */
+.tools-container {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 70vh;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+.tool {
+  display: none;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.tool.active {
+  display: block;
+}
+
+.tool h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tool Content */
+.tool-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Common Input Styles */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 14px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Markdown Split Pane */
+.split-pane {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  height: 520px;
+}
+
+textarea#markdown-input {
+  resize: none;
+  font-family: 'Consolas', monospace;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.preview {
+  background: #0f172a;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  overflow-y: auto;
+  line-height: 1.8;
+}
+
+/* Color Extractor */
+#color-canvas {
+  max-width: 100%;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  cursor: crosshair;
+  background: #000;
+}
+
+.color-info {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.color-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  border: 3px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Unit Converter */
+.converter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.converter-row span {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+
+/* Sketchpad */
+#sketch-canvas {
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+  touch-action: none;
+  max-width: 100%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.sketch-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.offline-status {
+  color: var(--success);
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .tabs {
+    padding: 0.5rem;
+  }
+  
+  .tab-button {
+    min-width: 100px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+  
+  .split-pane {
+    grid-template-columns: 1fr;
+    height: 420px;
+  }
+  
+  .tools-container {
+    padding: 1.5rem;
+  }
+  
+  .converter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
