@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Toolbox</title>
+  
+  <!-- PWA Meta Tags (will be enhanced by vite-plugin-pwa) -->
+  <meta name="theme-color" content="#1e2937" />
+  
+  <script type="module" src="/src/main.js"></script>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1>🛠️ Offline First PWA Toolbox</h1>
+      <p class="subtitle">Works completely offline • Data saved locally</p>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="qr">📱 QR Code</button>
+      <button class="tab-button" data-tab="markdown">📝 Markdown</button>
+      <button class="tab-button" data-tab="color">🎨 Color Extractor</button>
+      <button class="tab-button" data-tab="converter">🔄 Unit Converter</button>
+      <button class="tab-button" data-tab="sketch">✏️ Sketchpad</button>
+    </nav>
+
+    <!-- Tool Containers -->
+    <main class="tools-container">
+      
+      <!-- QR Code Generator -->
+      <div id="qr" class="tool active">
+        <h2>QR Code Generator</h2>
+        <div class="tool-content">
+          <input type="text" id="qr-input" placeholder="Enter text or URL..." />
+          <button id="generate-qr">Generate QR Code</button>
+          <div id="qr-result" class="qr-result"></div>
+          <button id="download-qr" class="hidden">Download PNG</button>
+        </div>
+      </div>
+
+      <!-- Markdown Editor -->
+      <div id="markdown" class="tool">
+        <h2>Markdown Editor</h2>
+        <div class="split-pane">
+          <textarea id="markdown-input" placeholder="Write markdown here..."></textarea>
+          <div id="markdown-preview" class="preview"></div>
+        </div>
+        <p class="status">Auto-saved to IndexedDB</p>
+      </div>
+
+      <!-- Color Extractor -->
+      <div id="color" class="tool">
+        <h2>Color Extractor</h2>
+        <div class="tool-content">
+          <input type="file" id="image-upload" accept="image/*" />
+          <div id="color-canvas-container">
+            <canvas id="color-canvas"></canvas>
+          </div>
+          <div class="color-info">
+            <div id="picked-color" class="color-box"></div>
+            <p id="color-hex">#000000</p>
+            <button id="copy-color">Copy HEX</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Converter -->
+      <div id="converter" class="tool">
+        <h2>Unit Converter</h2>
+        <div class="tool-content">
+          <select id="category">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+          </select>
+          
+          <div class="converter-row">
+            <input type="number" id="input-value" value="1" />
+            <select id="from-unit"></select>
+            <span>→</span>
+            <select id="to-unit"></select>
+            <input type="text" id="output-value" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sketchpad -->
+      <div id="sketch" class="tool">
+        <h2>Sketchpad</h2>
+        <div class="tool-content">
+          <div class="sketch-controls">
+            <input type="color" id="brush-color" value="#3b82f6" />
+            <input type="range" id="brush-size" min="1" max="50" value="5" />
+            <span id="size-value">5px</span>
+            <button id="clear-sketch">Clear Canvas</button>
+            <button id="download-sketch">Download PNG</button>
+          </div>
+          <canvas id="sketch-canvas" width="800" height="500"></canvas>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Built with Vanilla JS • Service Worker • IndexedDB • Canvas API</p>
+      <p class="offline-status">✅ You are currently offline-capable</p>
+    </footer>
+  </div>
+</body>
+</html>
