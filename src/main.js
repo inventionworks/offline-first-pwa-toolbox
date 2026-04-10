@@ -1,5 +1,7 @@
 // ==================== Offline First PWA Toolbox - Main App ====================
 
+import { initQRGenerator } from './tools/qr-generator.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const tabButtons = document.querySelectorAll('.tab-button');
   const tools = document.querySelectorAll('.tool');
