@@ -1,8 +1,8 @@
-// ========== Offline First PWA Toolbox – Main Entry ==========
+// Wait for the HTML to be fully loaded before doing anything
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM ready – initializing app');
+  console.log('App starting...');
 
-  // --- Tab switching ---
+  // Tab switching (safe because DOM is ready)
   const tabButtons = document.querySelectorAll('.tab-button');
   const tools = document.querySelectorAll('.tool');
 
@@ -19,17 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // --- Load QR generator only after DOM is ready ---
+  // Load the QR generator module dynamically
   import('./tools/qr-generator.js')
     .then(module => {
       if (typeof module.initQRGenerator === 'function') {
         module.initQRGenerator();
-        console.log('✅ QR Generator loaded');
-      } else {
-        console.error('initQRGenerator is not a function');
+        console.log('QR Generator ready');
       }
     })
-    .catch(err => console.error('Failed to load QR generator:', err));
+    .catch(err => console.error('QR module error:', err));
 
   // Start on QR tab
   switchTab('qr');
