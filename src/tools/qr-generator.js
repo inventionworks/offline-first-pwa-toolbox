@@ -1,26 +1,30 @@
 import QRCode from 'qrcode';
 
 export function initQRGenerator() {
+  // Get elements – these exist because DOMContentLoaded already fired
   const input = document.getElementById('qr-input');
   const generateBtn = document.getElementById('generate-qr');
   const resultDiv = document.getElementById('qr-result');
   const downloadBtn = document.getElementById('download-qr');
 
+  // Safety check
   if (!input || !generateBtn || !resultDiv || !downloadBtn) {
-    console.error('QR DOM elements missing – check IDs in index.html');
+    console.error('QR elements missing – check IDs in index.html');
     return;
   }
 
   let currentQRDataUrl = null;
 
+  // Generate QR code when button is clicked
   generateBtn.addEventListener('click', async () => {
     const text = input.value.trim();
     if (!text) {
       alert('Please enter text or URL');
       return;
     }
+
     try {
-      resultDiv.innerHTML = '<p style="color:#94a3b8; text-align:center;">Generating...</p>';
+      resultDiv.innerHTML = '<p style="color:#94a3b8;">Generating QR code...</p>';
       const qrDataUrl = await QRCode.toDataURL(text, {
         width: 300,
         margin: 2,
@@ -31,10 +35,11 @@ export function initQRGenerator() {
       downloadBtn.classList.remove('hidden');
     } catch (err) {
       console.error(err);
-      resultDiv.innerHTML = '<p style="color:#ef4444;">Failed to generate QR code</p>';
+      resultDiv.innerHTML = '<p style="color:red;">Failed to generate QR code</p>';
     }
   });
 
+  // Download button
   downloadBtn.addEventListener('click', () => {
     if (currentQRDataUrl) {
       const a = document.createElement('a');
@@ -44,5 +49,8 @@ export function initQRGenerator() {
     }
   });
 
-  input.addEventListener('keypress', e => e.key === 'Enter' && generateBtn.click());
+  // Press Enter to generate
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') generateBtn.click();
+  });
 }
