@@ -1,21 +1,19 @@
 import QRCode from 'qrcode';
 
 export function initQRGenerator() {
-  // Get elements – these exist because DOMContentLoaded already fired
   const input = document.getElementById('qr-input');
   const generateBtn = document.getElementById('generate-qr');
   const resultDiv = document.getElementById('qr-result');
   const downloadBtn = document.getElementById('download-qr');
 
-  // Safety check
+  // Safety: if any element is missing, stop
   if (!input || !generateBtn || !resultDiv || !downloadBtn) {
-    console.error('QR elements missing – check IDs in index.html');
+    console.error('QR elements not found – check HTML IDs');
     return;
   }
 
   let currentQRDataUrl = null;
 
-  // Generate QR code when button is clicked
   generateBtn.addEventListener('click', async () => {
     const text = input.value.trim();
     if (!text) {
@@ -39,7 +37,6 @@ export function initQRGenerator() {
     }
   });
 
-  // Download button
   downloadBtn.addEventListener('click', () => {
     if (currentQRDataUrl) {
       const a = document.createElement('a');
@@ -49,8 +46,7 @@ export function initQRGenerator() {
     }
   });
 
-  // Press Enter to generate
-  input.addEventListener('keypress', (e) => {
+  input.addEventListener('keypress', e => {
     if (e.key === 'Enter') generateBtn.click();
   });
 }
