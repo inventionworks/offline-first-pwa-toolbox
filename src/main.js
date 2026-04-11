@@ -1,39 +1,36 @@
-// ==================== Offline First PWA Toolbox - Main App ====================
-
+// ========== Offline First PWA Toolbox – Main Entry ==========
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('✅ DOM fully loaded - Starting Offline Toolbox');
+  console.log('DOM ready – initializing app');
 
-  // Tab logic
+  // --- Tab switching ---
   const tabButtons = document.querySelectorAll('.tab-button');
   const tools = document.querySelectorAll('.tool');
 
   function switchTab(tabName) {
     tabButtons.forEach(btn => btn.classList.remove('active'));
     tools.forEach(tool => tool.classList.remove('active'));
-
     const activeBtn = document.querySelector(`.tab-button[data-tab="${tabName}"]`);
     const activeTool = document.getElementById(tabName);
-
     if (activeBtn) activeBtn.classList.add('active');
     if (activeTool) activeTool.classList.add('active');
   }
 
   tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      switchTab(btn.getAttribute('data-tab'));
-    });
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // Dynamically load QR Generator AFTER DOM is ready
+  // --- Load QR generator only after DOM is ready ---
   import('./tools/qr-generator.js')
     .then(module => {
-      module.initQRGenerator();
-      console.log('✅ QR Generator initialized');
+      if (typeof module.initQRGenerator === 'function') {
+        module.initQRGenerator();
+        console.log('✅ QR Generator loaded');
+      } else {
+        console.error('initQRGenerator is not a function');
+      }
     })
-    .catch(err => {
-      console.error('❌ Failed to load QR generator:', err);
-    });
+    .catch(err => console.error('Failed to load QR generator:', err));
 
-  // Default to QR tab
+  // Start on QR tab
   switchTab('qr');
 });
