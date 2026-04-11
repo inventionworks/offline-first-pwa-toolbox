@@ -1,8 +1,8 @@
-// Wait for the HTML to be fully loaded before doing anything
+// Wait for the entire HTML to be ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('App starting...');
+  console.log('DOM ready – starting app');
 
-  // Tab switching (safe because DOM is ready)
+  // ----- Tab switching -----
   const tabButtons = document.querySelectorAll('.tab-button');
   const tools = document.querySelectorAll('.tool');
 
@@ -19,13 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // Load the QR generator module dynamically
+  // ----- Load QR Generator dynamically (only after DOM is ready) -----
   import('./tools/qr-generator.js')
     .then(module => {
-      if (typeof module.initQRGenerator === 'function') {
-        module.initQRGenerator();
-        console.log('QR Generator ready');
-      }
+      module.initQRGenerator();
+      console.log('✅ QR Generator loaded');
     })
     .catch(err => console.error('QR module error:', err));
 
